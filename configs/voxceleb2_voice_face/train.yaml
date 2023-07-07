@@ -1,0 +1,70 @@
+resume:
+pretrain:
+    use_pretrain: True
+    pretrain_face: ./exp/voice_face/last_model.pt
+    pretrain_voice: ./exp/voice_face/last_model.pt
+seed: 3407
+data:
+    dataset: voxceleb2
+    modality: RGB
+    batch_size: 64
+    workers: 4
+    image_tmpl: 'img_{:05d}.jpg'
+    train_face_list: 'lists/Voxceleb2/train_frame_cls.txt'
+    val_face_list: 'lists/Voxceleb2/val_frame_cls.txt' #
+    train_voice_list: 'lists/voxceleb2_voice/train_frame_new.txt'
+    val_voice_list: 'lists/voxceleb2_voice/train_frame_new.txt' #
+    label_list: 'lists/voxceleb2_new.csv'
+    index_bias: 1
+    input_size: 224
+    neg_sample: 3
+    randaug:
+        N: 2 #2
+        M: 9  #9
+    random_shift: True
+    exp_name: mvf_nus_both_32_test
+
+network:
+    arch: Transf_VITB32
+    init: True
+    tsm: False
+    drop_out: 0.0
+    emb_dropout: 0.0
+    type: Tranf_face
+    sim_header: "Transf"
+    id_num: 5994
+    voice:
+      input_resolution: [128, 256]
+      patch_size: 32
+      width: 768
+      layers: 12
+      heads: 12
+      output_dim: 512
+    face:
+      input_resolution: 224
+      patch_size: 32
+      width: 768
+      layers: 12
+      heads: 12
+      output_dim: 512
+
+solver:
+    type: cosine
+    epochs: 20
+    start_epoch: 0
+    epoch_offset: 0
+    optim: adamw
+    lr: 5.e-6 #5.e-6
+    lr_warmup_step: 2
+    momentum: 0.9
+    weight_decay: 0.2
+    lr_decay_step: 15
+    lr_decay_factor: 0.1
+    clip_gradient: 20
+    loss_type: nll
+    evaluate: False
+    ratio: 1
+    f_ratio: 10
+logging:
+    print_freq: 10
+    eval_freq: 1

@@ -1,0 +1,76 @@
+resume:
+pretrain:
+    split: False
+    pretrain:  ./exp/Tranf_face/Transf/TIMIT/mvf_finetune_DFDC_CustInfo_TIMIT_low_low//last_model.pt
+    pretrain_face: ./exp/Tranf_face/Transf/voxceleb/face_recognisation/20220418_190103/model_best.pt
+    pretrain_voice: ./exp/Tranf_face/Transf/voxceleb_voice/voice_recognisation/20220422_131227/last_model.pt
+seed: 1024
+data:
+    dataset: TIMIT
+    modality: RGB
+    num_segments: 1
+    seg_length: 1
+    batch_size: 256
+    workers: 16
+    num_classes: 2
+    image_tmpl: 'img_{:05d}.jpg'
+    train_face_list: 'lists/DFTIMIT/train_frame_low.txt'
+    val_face_list: 'lists/DFTIMIT/val_frame_low.txt' #
+    label_list: 'lists/DFDC.csv'
+    index_bias: 1
+    input_size: 224
+    neg_sample: 5
+    randaug:
+        N: 2 #2
+        M: 9  #9
+    random_shift: True
+    exp_name: mvf_finetune_DFDC_CustInfo_TIMIT_low_low
+
+network:
+    arch: Transf  #ViT-B/32 ViT-B/16
+    init: True
+    tsm: False
+    drop_out: 0.0
+    emb_dropout: 0.0
+    MM: True
+    layers: 12
+    type: Tranf_face
+    sim_header: "Transf"  #Transf   meanP  LSTM Conv_1D Transf_cls
+    joint: False
+    describe:
+    id_num: 5994
+    voice:
+      input_resolution: [128, 256]
+      patch_size: 32
+      width: 768
+      layers: 12
+      heads: 12
+      output_dim: 512
+    face:
+      input_resolution: 224
+      patch_size: 32
+      width: 768
+      layers: 12
+      heads: 12
+      output_dim: 512
+
+solver:
+    type: cosine
+    epochs: 50
+    start_epoch: 0
+    epoch_offset: 0
+    optim: adamw
+    lr: 5.e-6 #5.e-6
+    lr_warmup_step: 5
+    momentum: 0.9
+    weight_decay: 0.2
+    lr_decay_step: 15
+    lr_decay_factor: 0.1
+    clip_gradient: 20
+    loss_type: nll
+    evaluate: False
+    ratio: 1
+    f_ratio: 10
+logging:
+    print_freq: 10
+    eval_freq: 1

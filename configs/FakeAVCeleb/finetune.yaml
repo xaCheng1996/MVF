@@ -1,0 +1,76 @@
+resume:
+pretrain:
+    split: False
+    pretrain:  ./exp/voice_face/last_model.pt
+seed: 1024
+data:
+    dataset:
+        train_dataset: FakeAVCeleb
+        val_dataset: FakeAVCeleb
+    modality: RGB
+    num_segments: 1
+    seg_length: 1
+    batch_size: 16
+    workers: 16
+    num_classes: 400
+    image_tmpl: 'img_{:05d}.jpg'
+    train_face_list: 'lists/FakeAVCeleb/train_frame.txt'
+    val_face_list: 'lists/FakeAVCeleb/val_frame.txt' #
+    label_list: 'lists/FakeAVCeleb.csv'
+    index_bias: 1
+    input_size: 224
+    neg_sample: 10
+    randaug:
+        N: 2 #2
+        M: 9  #9
+    random_shift: True
+    exp_name: finetune_FakeAVCeleb
+
+network:
+    arch: Transf
+    init: True
+    tsm: False
+    drop_out: 0.0
+    emb_dropout: 0.0
+    MM: True
+    layers: 12
+    type: Tranf_face
+    sim_header: "Transf"
+    joint: False
+    describe:
+    id_num: 5994
+    voice:
+      input_resolution: [128, 256]
+      patch_size: 32
+      width: 768
+      layers: 12
+      heads: 12
+      output_dim: 512
+    face:
+      input_resolution: 224
+      patch_size: 32
+      width: 768
+      layers: 12
+      heads: 12
+      output_dim: 512
+
+solver:
+    type: cosine
+    epochs: 20
+    start_epoch: 0
+    epoch_offset: 0
+    optim: adamw
+    lr: 5.e-7 #5.e-6
+    lr_warmup_step: 2
+    momentum: 0.9
+    weight_decay: 0.2
+    lr_decay_step: 15
+    lr_decay_factor: 0.1
+    clip_gradient: 20
+    loss_type: nll
+    evaluate: False
+    ratio: 1
+    f_ratio: 10
+logging:
+    print_freq: 10
+    eval_freq: 1
