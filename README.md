@@ -24,9 +24,9 @@ Code for 'Voice-Face Homogeneity Tells Deepfake' [[Arxiv]][https://arxiv.org/abs
 
 1. Download the pre-trained model from:
 
-   DFDC: [link](https://drive.google.com/drive/folders/11YZ91OG1qFxDKRS8D1ihGL9wDsl7ybk7?usp=drive_link)
+   DFDC: [link](https://drive.google.com/file/d/1D1M6cg4KShfsqrvpqhuNI3TNn-U8vk4h/view?usp=sharing)
 
-   FakeAVCeleb: [link](https://drive.google.com/drive/folders/1DhnCb0nS3EM3Ym3tPIOcJGElLgv3YsJ8?usp=drive_link)
+   FakeAVCeleb: [link](https://drive.google.com/file/d/1kPneI1lrx9T6m-fT-Z79uJSlMeMClQsG/view?usp=drive_link)
 
    and put them into ./exp/[Dataset]
 
